@@ -1,1 +1,42 @@
-Description
+Description du projet
+
+Le but de ce projet est de créer un motus selon les règles du fameux jeu télévisé
+
+Tout d'abord rappelons rapidement les règles du Motus
+
+Le joueur doit trouver un mot de la langue française.
+- Seule la première lettre du mot est affichée (exemple: pour Maison on voit M _ _ _ _ _)
+- Le joueur propose un mot du même nombre de lettre (exemple: Marché)
+- Les lettres du mot proposé sont comparées à celle du mot mystère :
+  - Rouge: la lettre est correcte et bien placée
+  - Jaune: la lettre est dans le mot mais n'est pas bien placée
+  - Blanc: la lettre n'est pas dans le mot
+
+Exemple: pour Marché, seule la lettre A sera en rouge les autres seront en blanc
+
+Le joueur continue jusqu'à ce qu'il trouve le mot mystère, il dispose de 6 essais
+
+Fonctionnement général du programme
+
+On initialise la page en chargeant le tableau des scores et en l'affichant.
+
+On initialise le jeu en récupérant un mot de la langue française sur une API (https://trouve-mot.fr/api/random)
+
+On crée ensuite un tableau de 6 lignes et d'un nombre de colonnes égales au nombre de lettres dans le mot
+
+Le joueur peux ensuite taper un mot (et aussi effacer les lettres en cas d'erreur)
+Si le mot remplit toutes les colonnes alors si le joueur presse entrée on teste le mot:
+- Tout d'abord on vérifie que le mot existe bien dans la langue française en créant un requête vers Wiktionnaire
+- Si le mot existe alors on crée un tableau de la taille du mot avec l'état absent
+- Pour chaque lettre on la compare avec la lettre du mot mystère, si elles correspondent alors on change l'état correspondant sur correct dans le tableau sinon on l'ajoute dans une liste lettre restante
+- Ensuite pour les lettres restantes on vérifie si ces dernières sont dans le mot si oui on change l'état absent pour présent
+- Enfin on met à jour l'affichage, si l'état est correct on colorie la lettre en rouge, si l'état est présent on la colorie en jaune et sinon on la met en blanc
+- Si toutes les lettres sont dans l'état correct alors on affiche victoire et le jeu se termine
+- Sinon on indente l'indice de ligne et on recommence
+- Si l'indice de ligne est de 5 et que le joueur n'a pas trouvé alors on affiche défaite
+
+On affiche ensuite un bouton rejouer qui reprend toutes les étapes depuis le début de l'initialisation
+
+Il y a aussi un système de streak qui s'entretient lorsque le joueur trouve plusieurs mots à la suite et qui se rompt lorsque celui-ci perd. Il a alors le choix d'enregistrer son score dans le tableau des scores. Ce dernier est géré par le backend.
+
+Le programme présente néanmoins un bug que je n'ai pas réussi à résoudre pour le moment. Lorsque le mot généré par l'API contient un accent circonflexe comme dans le mot château par exemple. Alors la normalisation pour retirer les accents ne fonctionne pas et il est imposible de gagner même si le joueur tape CHATEAU.
