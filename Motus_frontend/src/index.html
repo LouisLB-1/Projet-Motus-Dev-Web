@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <title>Vanilla Starter</title>
+  </head>
+  <body>
+    <img src="public/Motus-logo.jpg" alt="Logo Motus" class="motus-logo" />
+    <div id="streak">🔥 Streak : 0 🔥</div>
+    <div class="grille" id="grille"></div>
+    <div id="victoire" class="popup">🎉 Bravo ! Tu as trouvé le mot ! 🎉</div>
+    <div id="defaite" class="popup"></div>
+    <button onclick="rejouer()" id="rejouer">Rejouer</button>
+    <h2>Tableau des scores</h2>
+    <table id="scoreTable">
+      <thead>
+        <tr>
+          <th>Joueur</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <audio id="musique" autoplay muted loop>
+      <source src="public/Motus.mp3" type="audio/mpeg" />
+    </audio>
+    <script src="/src/main.js"></script>
+  </body>
+</html>
